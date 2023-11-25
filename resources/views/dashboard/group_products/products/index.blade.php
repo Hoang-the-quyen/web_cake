@@ -115,7 +115,9 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        {{ $table_pro->links() }}
+                                        <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-end">
+                                            {{ $table_pro->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

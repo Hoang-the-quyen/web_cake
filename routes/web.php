@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Paratials;
 use App\Http\Controllers\Products;
+use App\Http\Controllers\Users;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,18 +15,10 @@ use App\Http\Controllers\Products;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [Paratials::class, 'show_new_pro'])->name('home-page');
 
 Route::prefix('dashboards')->group(function () {
-    Route::prefix('paratials')->group(function () {
-        Route::get('/dashboard',[Paratials::class, 'index'] );
-
-        Route::get('sidebar',[Paratials::class, 'sidebar'] );
-
-    });
-
+    
     // sản phẩm
     Route::prefix('products')->group(function () {
         Route::get('home-product', [Products::class, 'index'])->name('home-product');
@@ -43,4 +36,30 @@ Route::prefix('dashboards')->group(function () {
         Route::get('delete-product/{id}',[Products::class,'destroy'])->name('delete-product');
 
     });
+
+    
+});
+
+Route::prefix('pages')->group(function(){
+
+    Route::prefix('paratials')->group(function () {
+        
+        Route::get('/dashboard',[Paratials::class, 'index'] );
+
+        Route::get('sidebar',[Paratials::class, 'sidebar'] );
+
+        Route::get('shop',[Paratials::class,'shop'] )->name('shop');
+
+    });
+
+    Route::prefix('user')->group(function (){
+        Route::get('view_login',[Users::class,'view_login'] )->name('view_login');
+
+        Route::post('login',[Users::class,'login'] )->name('login');
+
+        Route::get('logout', [Users::class,'logout'])->name('logout');
+
+
+    });
+
 });

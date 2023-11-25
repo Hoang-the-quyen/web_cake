@@ -15,9 +15,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Product name</label>
                                             <div class="col-sm-9">
-                                                <input type="file" id="file" name="images"
-                                                    style="border:solid 1px black" class="form-control"
-                                                    onchange="displayImage(this)">
+                                                <input name="name" style="border:solid 1px black" type="text"
+                                                class="form-control" />
                                             </div>
                                         </div>
                                     </div>
