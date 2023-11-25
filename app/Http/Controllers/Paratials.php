@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Product;
+use DB;
 class Paratials extends Controller
 {
     
@@ -18,40 +19,16 @@ class Paratials extends Controller
         return view('dashboard.paratials.sidebar');
     }
 
-
+    public function show_new_pro(){
+        $show_new_pro = Product::orderBy('product_id', 'desc')->paginate(8);
+        return view('pages.paratials.home_pages', ['show_new_pro' => $show_new_pro]);
+    }
     
-    public function create()
-    {
-        //
+    public function shop(){
+        $cate = DB::table('categories')->get();
+        $shop = Product::orderBy('product_id', 'desc')->paginate(12);
+        return view("pages.product.product", ['shop' => $shop],['cate' => $cate]);
     }
 
-    
-    public function store(Request $request)
-    {
-        //
-    }
 
-    
-    public function show($id)
-    {
-        //
-    }
-
-    
-    public function edit($id)
-    {
-        //
-    }
-
-    
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-   
-    public function destroy($id)
-    {
-        //
-    }
 }
