@@ -9,8 +9,15 @@ class Paratials extends Controller
     
     public function index()
     {
-        return view("dashboard.dashboard");
+        return view("dashboard.paratials.main");
     }
+
+
+    public function sidebar()
+    {
+        return view('dashboard.paratials.sidebar');
+    }
+
 
     
     public function create()
