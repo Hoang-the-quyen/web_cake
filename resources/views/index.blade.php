@@ -45,10 +45,11 @@
                 <a href="#"><img src="{{ asset('frontend/img/icon/heart.png') }}" alt=""></a>
             </div>
             <div class="offcanvas__cart__item">
-                <a href="#"><img src="{{ asset('frontend/img/icon/cart.png') }}" alt="">
+                <a href=""><img src="{{ asset('frontend/img/icon/cart.png') }}" alt="">
                     <span>0</span></a>
                 <div class="cart__price">Cart: <span>$0.00</span></div>
             </div>
+            
         </div>
         <div class="offcanvas__logo">
             <a href="./index.html"><img src="{{ asset('frontend/img/logo.png') }}" alt=""></a>
@@ -101,9 +102,9 @@
 
                                     <li>
                                         @if ($customer_id == null)
-                                            <a href="{{ route('view_login') }}">Sign in</a> 
+                                            <a href="{{ route('view_login') }}">Sign in</a>
                                         @else
-                                            <a href="{{ route('logout') }}">Logout</a> 
+                                            <a href="{{ route('logout') }}">Logout</a>
                                         @endif
                                     </li>
 
@@ -122,7 +123,7 @@
                                             alt=""></a>
                                 </div>
                                 <div class="header__top__right__cart">
-                                    <a href="#"><img src="{{ asset('frontend/img/icon/cart.png') }}"
+                                    <a href="{{route('show_cart')}}"><img src="{{ asset('frontend/img/icon/cart.png') }}"
                                             alt=""> <span>0</span></a>
                                     <div class="cart__price">Cart: <span>$0.00</span></div>
                                 </div>
@@ -269,6 +270,7 @@
     <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="{{asset('frontend/js/sweetalert.min.js') }}"></script>
 </body>
 
 </html>
