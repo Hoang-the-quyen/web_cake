@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}" type="text/css">
 
     @php
-        $currentPage = Request::path(); // Lấy phần đoạn đường dẫn đầu tiên (vd: shop-details, shoping-cart, checkout, ...)
+        $currentPage = Request::path(); 
     @endphp
 </head>
 
@@ -122,11 +122,14 @@
                                     <a href="#"><img src="{{ asset('frontend/img/icon/heart.png') }}"
                                             alt=""></a>
                                 </div>
-                                <div class="header__top__right__cart">
-                                    <a href="{{route('show_cart')}}"><img src="{{ asset('frontend/img/icon/cart.png') }}"
-                                            alt=""> <span>0</span></a>
-                                    <div class="cart__price">Cart: <span>$0.00</span></div>
+                                <div class="header__top__right__cart" id="cartIcon">
+                                    <a href="{{ route('show_cart') }}">
+                                        <img src="{{ asset('frontend/img/icon/cart.png') }}" alt="">
+                                        <span id="cartItemCount">0</span>
+                                    </a>
+                                    <div class="cart__price">Cart</div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -165,7 +168,7 @@
                             <li class="{{ $currentPage === 'blog' ? 'active' : '' }}"><a href="./blog.html">Blog</a>
                             </li>
                             <li class="{{ $currentPage === 'contact' ? 'active' : '' }}"><a
-                                    href="./contact.html">Contact</a></li>
+                                    href="./contact.html">Order</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -271,6 +274,60 @@
     <script src="{{ asset('frontend/js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{asset('frontend/js/sweetalert.min.js') }}"></script>
+    
+    <!-- Thêm sản phẩm vào giỏ hàng -->
+<script>
+    function updateCartCount() {
+        $.ajax({
+            type: 'GET',
+            url: '{{ route('getCartCount') }}',
+            success: function(data) {
+                // Cập nhật số lượng sản phẩm trong giỏ hàng ở header
+                $('#cartItemCount').text(data.count);
+            },
+            error: function(error) {
+                console.log(error.responseJSON.error);
+                // Xử lý lỗi, hiển thị thông báo lỗi, v.v.
+            }
+        });
+    }
+
+    // Gọi hàm cập nhật số lượng sản phẩm khi trang được load
+    $(document).ready(function() {
+        updateCartCount();
+    });
+
+    // Thêm sản phẩm vào giỏ hàng
+    $('.add-to-cart').on('click', function() {
+        var productId = $(this).data('product-id');
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('addToCart') }}',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'product_id': productId
+            },
+            success: function(data) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Thêm sản phẩm vào giỏ hàng thành công!",
+                    showConfirmButton: false,
+                    timer: 500
+                });
+                console.log(data);
+                // Handle success, update cart UI, etc.
+                updateCartCount(); // Cập nhật số lượng sản phẩm sau khi thêm vào giỏ hàng
+            },
+            error: function(error) {
+                console.log(error.responseJSON.error);
+                // Handle error, display error message, v.v.
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

@@ -94,7 +94,6 @@
                                     data-product-id="{{ $show->product_id }}">Thêm vào giỏ hàng</button>
                                 <a href="#" class="heart__btn"><span class="icon_heart_alt"></span></a>
                                 <!-- Button to remove product from cart -->
-                                <button class="remove-from-cart" data-product-id="{{ $show['product_id'] }}">Remove</button>
 
                             </div>
 
@@ -283,7 +282,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-    <script>
+    {{-- <script>
         // thêm sản phẩm vào giỏ hàng
         $('.add-to-cart').on('click', function() {
             var productId = $(this).data('product-id');
@@ -312,34 +311,6 @@
                 }
             });
         });
-        // xóa sản phẩm khỏi giỏ hàng
-        $('.remove-from-cart').on('click', function() {
-            var productId = $(this).data('product-id');
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('removeFromCart') }}',
-                data: {
-                    '_token': '{{ csrf_token() }}',
-                    'product_id': productId
-                },
-                success: function(data) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Xóa thành c!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    console.log(data);
-                    // Handle success, update cart UI, etc.
-                },
-                error: function(error) {
-                    console.log(error.responseJSON.error);
-                    // Handle error, display error message, etc.
-                }
-            });
-        });
-    </script>
+    </script> --}}
     <!-- Related Products Section End -->
 @endsection

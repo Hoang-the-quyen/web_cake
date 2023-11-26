@@ -90,7 +90,8 @@
                                     <h6><a href="#">{{ $pro->name }}</a></h6>
                                     <div class="product__item__price">{{ number_format($pro->price) }} vnđ</div>
                                     <div class="cart_add">
-                                        <a href="{{ route('product_detail', ['id' => $pro->product_id]) }}">Add to cart</a>
+                                        <a style="cursor: pointer" class="add-to-cart"
+                                        data-product-id="{{ $pro->product_id }}">Add to cart</a>
                                     </div>
                                    
                                 </div>
@@ -114,4 +115,13 @@
     </section>
     <!-- Shop Section End -->
     <!-- Đảm bảo bạn đã bao gồm thư viện jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @endsection

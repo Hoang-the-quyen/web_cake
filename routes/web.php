@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\ManagerOrder;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Paratials;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Categorys;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,21 @@ Route::prefix('dashboards')->group(function () {
 
         Route::get('delete-product/{id}', [Products::class, 'destroy'])->name('delete-product');
 
+    });
+    // danh mục
+    Route::prefix('categories')->group(function() {
+
+        Route::get('home-cate',[Categorys::class,'index'])->name('home-cate');
+
+        Route::get('create-cate', [Categorys::class, 'create'])->name('create-cate');
+
+        Route::post('store-cate', [Categorys::class, 'store'])->name('store-cate');
+
+        Route::get('edit-cate/{id}', [Categorys::class, 'edit'])->name('edit-cate');
+
+        Route::post('update-cate/{id}', [Categorys::class, 'update'])->name('update-cate');
+
+        Route::get('delete-cate/{id}', [Categorys::class, 'destroy'])->name('delete-cate');
     });
 
 
@@ -76,9 +92,21 @@ Route::prefix('pages')->group(function () {
         Route::get('/show_cart', [CartController::class, 'show_cart'])->name('show_cart');
 
         Route::post('/remove-from-cart', [CartController::class, 'removeFromCart'])->name('removeFromCart');
-    });
-    Route::match(['get', 'post'], '/checkout', [CartController::class,'checkout'])->name('checkout');
+    
+        Route::match(['get', 'post'], '/checkout', [CartController::class,'checkout'])->name('checkout');
 
-    Route::any('/checkout', [CartController::class,'checkout'])->name('checkout');
+        Route::any('/checkout', [CartController::class,'checkout'])->name('checkout');
+        
+        Route::get('/getCartCount', [CartController::class,'getCartCount'])->name('getCartCount');
+        
+        Route::get('send-order/{id}', [CartController::class,'send_order'])->name('send-order');
+
+        Route::prefix('orders')->group(function(){
+            Route::get('order-detail/{id}', [ManagerOrder::class,'order_detail'])->name('order-detail');
+
+            Route::get('home-manager-order',[ManagerOrder::class,'index'])->name('home-manager-order');
+        });
+    });
+    
 
 });

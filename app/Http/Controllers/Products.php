@@ -138,5 +138,6 @@ class Products extends Controller
             // Xử lý lỗi nếu có
             return redirect()->route('home-product')->with('error', 'Đã xảy ra lỗi khi xóa sản phẩm.');
         }
+        
     }
 }
