@@ -19,10 +19,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cart as $item)
-                                    <tr>
+                                @foreach ($cart as $item)
+                                    <tr class="cart-product" data-product-id="{{ $item['id'] }}">
                                         <td class="cart__product__item">
-                                            <img width="200px" height="200px" src="{{ asset('uploads/' . $item['images']) }}" alt="Product">
+                                            <img width="200px" height="200px" src="{{ asset('uploads/' . $item['images']) }}"
+                                                alt="Product">
                                         </td>
                                         <td class="cart__product__id">
                                             {{ $item['id'] }}
@@ -40,7 +41,8 @@
                                             {{ number_format($item['quantity'] * $item['price']) }} vnđ
                                         </td>
                                         <td class="cart__product__remove">
-                                            <button class="remove-from-cart" data-product-id="{{ $item['id'] }}">Xóa</button>
+                                            <button class="remove-from-cart"
+                                                data-product-id="{{ $item['id'] }}">Xóa</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -52,12 +54,24 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="cart__total__procced">
-                        {{-- <h6>Tổng cộng <span>{{ number_format($totalAmount) }} vnđ</span></h6> --}}
                         <form method="POST" action="{{ route('checkout') }}">
                             @csrf
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" required>
+
+                            <label for="phone">Phone:</label>
+                            <input type="tel" name="phone" required>
+
+                            <label for="address">Address:</label>
+                            <input type="text" name="address" required>
+
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" required>
+
+                            <input type="hidden" name="order_id" value="{{ uniqid() }}">
+
                             <button type="submit" class="primary-btn">Tiến hành thanh toán</button>
                         </form>
-                        
                     </div>
                 </div>
             </div>
@@ -65,7 +79,6 @@
     </section>
     <!-- Giỏ hàng Section End -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
     <script>
         // Xóa sản phẩm khỏi giỏ hàng
         $('.remove-from-cart').on('click', function() {
@@ -79,8 +92,11 @@
                     'product_id': productId
                 },
                 success: function(data) {
-                    // Cập nhật lại trang giỏ hàng sau khi xóa
-                    window.location.reload();
+                    // Ẩn hàng sản phẩm đã xóa
+                    $('.cart-product[data-product-id="' + productId + '"]').hide();
+
+                    // Cập nhật số lượng sản phẩm trong giỏ hàng (nếu cần)
+                    updateCartCount();
                 },
                 error: function(error) {
                     console.log(error.responseJSON.error);
@@ -88,5 +104,9 @@
                 }
             });
         });
+
+        function updateCartCount() {
+            // Cập nhật số lượng sản phẩm trong giỏ hàng ở header (sử dụng ajax như trong ví dụ trước)
+        }
     </script>
 @endsection
