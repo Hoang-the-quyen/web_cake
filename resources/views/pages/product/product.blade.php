@@ -1,6 +1,5 @@
 @extends('index')
 @section('main')
-
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -31,7 +30,7 @@
                             <form action="#">
                                 <select>
                                     @foreach ($cate as $cate)
-                                        <option value="{{$cate->category_id}}">{{$cate->category_name}}</option>
+                                        <option value="{{ $cate->category_id }}">{{ $cate->category_name }}</option>
                                     @endforeach
                                 </select>
                                 <input id="searchInput" type="text" placeholder="Search">
@@ -79,22 +78,25 @@
             <div class="row">
 
                 @foreach ($shop as $index => $pro)
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{ asset('uploads/' . $pro->images) }}">
-                                <div class="product__label">
-                                    <span>Cupcake</span>
+                    <a href="{{route('product_detail',['id' => $pro->product_id])}}">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{{ asset('uploads/' . $pro->images) }}">
+                                    <div class="product__label">
+                                        <span>Cupcake</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="#">{{ $pro->name }}</a></h6>
-                                <div class="product__item__price">{{ number_format($pro->price) }} vnđ</div>
-                                <div class="cart_add">
-                                    <a href="#">Add to cart</a>
+                                <div class="product__item__text">
+                                    <h6><a href="#">{{ $pro->name }}</a></h6>
+                                    <div class="product__item__price">{{ number_format($pro->price) }} vnđ</div>
+                                    <div class="cart_add">
+                                        <a href="{{ route('product_detail', ['id' => $pro->product_id]) }}">Add to cart</a>
+                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
 
             </div>
@@ -105,7 +107,7 @@
                             {{ $shop->links() }}
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

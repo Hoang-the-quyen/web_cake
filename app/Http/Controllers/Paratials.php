@@ -30,5 +30,14 @@ class Paratials extends Controller
         return view("pages.product.product", ['shop' => $shop],['cate' => $cate]);
     }
 
+    public function product_detail($id){
+        $product = Product::where('product_id', $id)->get();
+        $cate = DB::table('categories')->get();
+        $sup = DB::table('suppliers')->get();
+
+        return view('pages.product.product_detail')->with('product', $product)->with('cate', $cate)->with('sup', $sup);
+
+    }
+
 
 }
