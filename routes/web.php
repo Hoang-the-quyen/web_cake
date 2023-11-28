@@ -57,6 +57,15 @@ Route::prefix('dashboards')->group(function () {
     });
 
 
+    Route::prefix('orders')->group(function(){
+        Route::get('order-detail/{id}', [ManagerOrder::class,'order_detail'])->name('order-detail');
+
+        Route::get('home-manager-order',[ManagerOrder::class,'index'])->name('home-manager-order');
+
+        
+    });
+
+
 });
 
 Route::prefix('pages')->group(function () {
@@ -71,6 +80,7 @@ Route::prefix('pages')->group(function () {
 
         Route::get('product_detail/{id}', [Paratials::class, 'product_detail'])->name('product_detail');
 
+        Route::get('search-order', [Paratials::class, 'search_order'])->name('search-order');
 
     });
 
@@ -101,11 +111,7 @@ Route::prefix('pages')->group(function () {
         
         Route::get('send-order/{id}', [CartController::class,'send_order'])->name('send-order');
 
-        Route::prefix('orders')->group(function(){
-            Route::get('order-detail/{id}', [ManagerOrder::class,'order_detail'])->name('order-detail');
-
-            Route::get('home-manager-order',[ManagerOrder::class,'index'])->name('home-manager-order');
-        });
+        Route::get('order-history',[CartController::class,'order_history'])->name('order-history');
     });
     
 

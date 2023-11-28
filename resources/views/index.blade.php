@@ -167,8 +167,8 @@
                             </li>
                             <li class="{{ $currentPage === 'blog' ? 'active' : '' }}"><a href="./blog.html">Blog</a>
                             </li>
-                            <li class="{{ $currentPage === 'contact' ? 'active' : '' }}"><a
-                                    href="./contact.html">Order</a></li>
+                            <li class="{{ Str::contains($currentPage, 'order') ? 'active' : '' }}"><a
+                                    href="{{route('order-history')}}">Order</a></li>
                         </ul>
                     </nav>
                 </div>

@@ -150,6 +150,8 @@ class CartController extends Controller
         return redirect()->route('home-manager-order');
     }
     
-
+    public function order_history(){
+        return view('pages.cart.order_history');
+    }
 }
 
