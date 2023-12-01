@@ -30,7 +30,7 @@ class Paratials extends Controller
     public function shop()
     {
         $cate = DB::table('categories')->get();
-        $shop = Product::orderBy('product_id', 'desc')->paginate(12);
+        $shop = Product::orderBy('product_id', 'desc')->paginate(40);
         return view("pages.product.product", ['shop' => $shop], ['cate' => $cate]);
     }
 
@@ -45,14 +45,14 @@ class Paratials extends Controller
     }
 
 
-    public function search_order(Request $request)
-    {
-        $data = Purchase();
-        $in =  $request->input('product_id');
+    // public function search_order(Request $request)
+    // {
+    //     $data = Purchase();
+    //     $in =  $request->input('product_id');
 
-        if($in = $data->phone){
+    //     if($in = $data->phone){
             
-        }
-    }
+    //     }
+    // }
 
 }
