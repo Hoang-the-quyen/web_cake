@@ -27,7 +27,8 @@
                 <div class="row">
                     <div class="col-lg-7 col-md-7">
                         <div class="shop__option__search">
-                            <form action="{{route('search-order')}}" method="get">
+                            <form action="{{route('search-order')}}" method="post">
+                                @csrf
                                 <input id="timkiem" name="timkiem" type="text" placeholder="Phone number or order code">
                                 <button name="search" type="submit"><i class="fa fa-search"></i></button>
                             </form>

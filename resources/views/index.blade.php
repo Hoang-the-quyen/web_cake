@@ -119,8 +119,8 @@
                                 <div class="header__top__right__links">
                                     <a href="#" class="search-switch"><img
                                             src="{{ asset('frontend/img/icon/search.png') }}" alt=""></a>
-                                    <a href="#"><img src="{{ asset('frontend/img/icon/heart.png') }}"
-                                            alt=""></a>
+                                    {{-- <a href="#"><img src="{{ asset('frontend/img/icon/heart.png') }}"
+                                            alt=""></a> --}}
                                 </div>
                                 <div class="header__top__right__cart" id="cartIcon">
                                     <a href="{{ route('show_cart') }}">

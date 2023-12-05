@@ -92,7 +92,7 @@
                                 </div>
                                 <button class="add-to-cart btn btn-primary primary-btn"
                                     data-product-id="{{ $show->product_id }}">Thêm vào giỏ hàng</button>
-                                <a href="#" class="heart__btn"><span class="icon_heart_alt"></span></a>
+                                {{-- <a href="#" class="heart__btn"><span class="icon_heart_alt"></span></a> --}}
                                 <!-- Button to remove product from cart -->
 
                             </div>

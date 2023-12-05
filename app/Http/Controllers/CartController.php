@@ -13,65 +13,81 @@ class CartController extends Controller
 {
 
 
+
     public function checkout(Request $request)
     {
+        // Retrieve the cart from the session
         $cart = $request->session()->get('cart');
 
-        // Validate the request
-        $request->validate([
-            'name' => 'required|string',
-            'phone' => 'required|string',
-            'address' => 'required|string',
-            'email' => 'required|email',
-            'order_id' => 'required|string',
-        ]);
-
-        $customerInfo = [
-            'name' => $request->input('name'),
-            'phone' => $request->input('phone'),
-            'address' => $request->input('address'),
-            'email' => $request->input('email'),
-        ];
-
-        try {
-            // Start a database transaction
-            DB::beginTransaction();
-
-            // Step 1: Insert data into the 'orders' table
-            $order = DB::table('orders')->insertGetId([
-                'order_id' => $request->input('order_id'),
-                'status' => 1,
-                'date' => now(),
+        // Check if $cart is not null and is an array
+        if (!is_null($cart) && is_array($cart)) {
+            // Validate the request
+            $request->validate([
+                'name' => 'required|string',
+                'phone' => 'required|string',
+                'address' => 'required|string',
+                'email' => 'required|email',
+                'order_id' => 'required|string',
             ]);
 
-            // Step 2: Insert data into the 'purchases' table for each item in the cart
+            // Calculate total order value
+            $totalOrderValue = 0;
             foreach ($cart as $item) {
-                DB::table('purchases')->insert([
-                    'product_id' => $item['id'],
-                    'quantity' => $item['quantity'],
-                    'order_id' => $request->input('order_id'),
-                    'name' => $customerInfo['name'],
-                    'phone' => $customerInfo['phone'],
-                    'address' => $customerInfo['address'],
-                    'email' => $customerInfo['email'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                $totalOrderValue += $item['quantity'] * $item['price'];
             }
 
-            // Commit the transaction if all queries succeed
-            DB::commit();
+            $customerInfo = [
+                'name' => $request->input('name'),
+                'phone' => $request->input('phone'),
+                'address' => $request->input('address'),
+                'email' => $request->input('email'),
+                'total' => $totalOrderValue,
+            ];
 
-            // Clear the cart from the session
-            $request->session()->forget('cart');
+            try {
+                // Start a database transaction
+                DB::beginTransaction();
 
-            // Additional logic can be added here.
+                // Step 1: Insert data into the 'orders' table
+                $order = DB::table('orders')->insertGetId([
+                    'order_id' => $request->input('order_id'),
+                    'total' => $totalOrderValue,
+                    'status' => 1,
+                    'date' => now(),
+                ]);
 
-            return 'ok';
-        } catch (\Exception $e) {
-            // An error occurred, rollback the database transaction
-            DB::rollback();
-            return $e->getMessage(); // You might want to handle the error more gracefully
+                // Step 2: Insert data into the 'purchases' table for each item in the cart
+                foreach ($cart as $item) {
+                    DB::table('purchases')->insert([
+                        'product_id' => $item['id'],
+                        'quantity' => $item['quantity'],
+                        'order_id' => $request->input('order_id'),
+                        'name' => $customerInfo['name'],
+                        'phone' => $customerInfo['phone'],
+                        'address' => $customerInfo['address'],
+                        'email' => $customerInfo['email'],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                // Commit the transaction if all queries succeed
+                DB::commit();
+
+                // Clear the cart from the session
+                $request->session()->forget('cart');
+
+                // Additional logic can be added here.
+                Session::put('message','Bạn đã đặt hàng thành công.');
+                return redirect()->route('shop');
+            } catch (\Exception $e) {
+                // An error occurred, rollback the database transaction
+                DB::rollback();
+                return $e->getMessage(); // You might want to handle the error more gracefully
+            }
+        } else {
+            // Handle the case where $cart is null or not an array
+            return 'Cart is empty or invalid.';
         }
     }
 
@@ -144,13 +160,15 @@ class CartController extends Controller
         return response()->json(['count' => $cartCount]);
     }
 
-    public function send_order($id) {
+    public function send_order($id)
+    {
         DB::table('orders')->where('order_id', $id)->update(['status' => 2]);
-    
+
         return redirect()->route('home-manager-order');
     }
-    
-    public function order_history(){
+
+    public function order_history()
+    {
         return view('pages.cart.order_history');
     }
 }

@@ -7,12 +7,25 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="breadcrumb__text">
                         <h2>Shop</h2>
+                        <?php
+                        $message = Session::get('message');
+                        if ($message) {
+                            echo '<h4 id="message" style="color:green;animation: ease-in-out 3s">' . $message . '</h4>';
+                            Session::put('message', null);
+                        }
+                        ?>
+                        <script>
+                            setTimeout(function() {
+                                document.getElementById("message").style.display = "none";
+                            }, 5000);
+                        </script>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="breadcrumb__links">
                         <a href="./index.html">Home</a>
                         <span>Shop</span>
+
                     </div>
                 </div>
             </div>
@@ -42,20 +55,21 @@
                                         $('#searchInput').on('input', function() {
                                             // Lấy giá trị từ input
                                             var searchTerm = $(this).val().toLowerCase();
-
                                             // Lặp qua từng sản phẩm để ẩn/hiện tùy thuộc vào kết quả tìm kiếm
-                                            $('.product__item').each(function() {
-                                                var productName = $(this).find('h6 a').text().toLowerCase();
+                                            $('.sp').each(function() {
+                                                var productName = $(this).find('h6').text().toLowerCase();
 
                                                 if (productName.includes(searchTerm)) {
-                                                    $(this).show();
+                                                    $(this).show(); // Show the product
                                                 } else {
-                                                    $(this).hide();
+                                                    $(this).hide(); // Hide the product (display: none)
                                                 }
                                             });
                                         });
                                     });
                                 </script>
+
+
 
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
@@ -76,10 +90,9 @@
                 </div>
             </div>
             <div class="row">
-
                 @foreach ($shop as $index => $pro)
-                    <a href="{{route('product_detail',['id' => $pro->product_id])}}">
-                        <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="sp col-lg-3 col-md-6 col-sm-6">
+                        <a href="{{ route('product_detail', ['id' => $pro->product_id]) }}" class="product-link">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="{{ asset('uploads/' . $pro->images) }}">
                                     <div class="product__label">
@@ -87,20 +100,19 @@
                                     </div>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">{{ $pro->name }}</a></h6>
+                                    <h6>{{ $pro->name }}</h6>
                                     <div class="product__item__price">{{ number_format($pro->price) }} vnđ</div>
                                     <div class="cart_add">
                                         <a style="cursor: pointer" class="add-to-cart"
-                                        data-product-id="{{ $pro->product_id }}">Add to cart</a>
+                                            data-product-id="{{ $pro->product_id }}">Add to cart</a>
                                     </div>
-                                   
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 @endforeach
-
             </div>
+
             <div class="shop__last__option">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-end">
@@ -123,5 +135,4 @@
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 @endsection

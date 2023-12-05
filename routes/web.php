@@ -80,7 +80,7 @@ Route::prefix('pages')->group(function () {
 
         Route::get('product_detail/{id}', [Paratials::class, 'product_detail'])->name('product_detail');
 
-        Route::get('search-order', [Paratials::class, 'search_order'])->name('search-order');
+        Route::post('search-order', [Paratials::class, 'search_order'])->name('search-order');
 
     });
 

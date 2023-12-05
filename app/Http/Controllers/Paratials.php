@@ -44,15 +44,34 @@ class Paratials extends Controller
 
     }
 
-
     // public function search_order(Request $request)
     // {
-    //     $data = Purchase();
-    //     $in =  $request->input('product_id');
+    //     $keyword = $request->timkiem;
+    //     $search_orders = DB::table('orders')
+    //         ->join('purchases', 'orders.order_id', '=', 'purchases.order_id')
+    //         ->join('products','products.product_id','=','purchases.product_id')
+    //         ->where('orders.order_id', 'like', '%' . $keyword . '%')
+    //         ->select('orders.*', 'purchases.*') // Select columns you need from both tables
+    //         ->get();
 
-    //     if($in = $data->phone){
-            
-    //     }
+    //     return view('pages.cart.show_order_history')->with('search_orders', $search_orders);
     // }
+
+
+    public function search_order(Request $request)
+{
+    $keyword = $request->timkiem;
+    
+    $search_orders = DB::table('orders')
+        ->join('purchases', 'orders.order_id', '=', 'purchases.order_id')
+        ->join('products', 'products.product_id', '=', 'purchases.product_id')
+        ->where('orders.order_id', 'like', '%' . $keyword . '%')
+        ->select('products.images', 'products.name', 'products.price') // Select specific columns from the 'products' table
+        ->get();
+
+    return view('pages.cart.show_order_history')->with('search_orders', $search_orders);
+}
+
+
 
 }
