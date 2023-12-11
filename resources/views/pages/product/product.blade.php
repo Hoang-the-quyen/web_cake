@@ -77,11 +77,10 @@
                     </div>
                     <div class="col-lg-5 col-md-5">
                         <div class="shop__option__right">
-                            <select>
+                            <select id="sortSelect">
                                 <option value="">Default sorting</option>
-                                <option value="">A to Z</option>
-                                <option value="">1 - 8</option>
-                                <option value="">Name</option>
+                                <option value="atoz">A to Z</option>
+                                <option value="ztoa">Z to A</option>
                             </select>
                             <a href="#"><i class="fa fa-list"></i></a>
                             <a href="#"><i class="fa fa-reorder"></i></a>
@@ -135,4 +134,37 @@
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script>
+        $(document).ready(function() {
+            // Lắng nghe sự kiện khi người dùng chọn sắp xếp
+            $('#sortSelect').on('change', function() {
+                // Lấy giá trị từ select
+                var sortOption = $('#sortSelect').val();
+    
+                // Lặp qua từng sản phẩm để sắp xếp
+                var products = $('.sp').get();
+    
+                products.sort(function(a, b) {
+                    var productNameA = $(a).find('h6').text().toLowerCase();
+                    var productNameB = $(b).find('h6').text().toLowerCase();
+    
+                    if (sortOption === 'atoz') {
+                        return productNameA.localeCompare(productNameB);
+                    } else if (sortOption === 'ztoa') {
+                        return productNameB.localeCompare(productNameA);
+                    }
+    
+                    // Default: No sorting
+                    return 0;
+                });
+    
+                // Xóa các sản phẩm hiện tại
+                $('.sp').remove();
+    
+                // Hiển thị sản phẩm đã sắp xếp
+                $('.row').append(products);
+            });
+        });
+    </script> --}}
+    
 @endsection

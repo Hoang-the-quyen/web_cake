@@ -1,6 +1,5 @@
 @extends('index')
 @section('main')
-    
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="hero__slider owl-carousel">
@@ -38,44 +37,18 @@
             <div class="row">
                 <h2 class="col-lg-12 col-md-6 col-sm-6" style="text-align: center;width:100%;margin:20px auto;">Danh mục sản
                     phẩm</h2>
-                <div class="categories__slider owl-carousel">
-                    <div class="categories__item">
-                        <div class="categories__item__icon">
-                            <span class="flaticon-029-cupcake-3"></span>
-                            <h5>Cupcake</h5>
-                        </div>
+                    <div class="categories__slider owl-carousel">
+                        @foreach ($cate as $cate)
+                        <a href="">
+                            <div class="categories__item">
+                                <div class="categories__item__icon">
+                                    <span><img style="margin:0 auto;width:100px;border-radius:50%" src="{{ asset('uploads/' . $cate->icon) }}" alt=""></span>
+                                    <h5>{{ $cate->category_name }}</h5>
+                                </div>
+                            </div>
+                        </a>
+                        @endforeach
                     </div>
-                    <div class="categories__item">
-                        <div class="categories__item__icon">
-                            <span class="flaticon-034-chocolate-roll"></span>
-                            <h5>Butter</h5>
-                        </div>
-                    </div>
-                    <div class="categories__item">
-                        <div class="categories__item__icon">
-                            <span class="flaticon-005-pancake"></span>
-                            <h5>Red Velvet</h5>
-                        </div>
-                    </div>
-                    <div class="categories__item">
-                        <div class="categories__item__icon">
-                            <span class="flaticon-030-cupcake-2"></span>
-                            <h5>Biscuit</h5>
-                        </div>
-                    </div>
-                    <div class="categories__item">
-                        <div class="categories__item__icon">
-                            <span class="flaticon-006-macarons"></span>
-                            <h5>Donut</h5>
-                        </div>
-                    </div>
-                    <div class="categories__item">
-                        <div class="categories__item__icon">
-                            <span class="flaticon-006-macarons"></span>
-                            <h5>Cupcake</h5>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -87,24 +60,27 @@
             <div class="row">
                 <h1 class="col-lg-12 col-md-6 col-sm-6" style="text-align: center;width:100%;margin:20px auto;">Sản phẩm nổi
                     bật</h1>
-                @foreach ($show_new_pro as $show_pro)
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{ asset('uploads/' . $show_pro->images) }}">
-                                <div class="product__label">
-                                    <span>Cupcake</span>
+                    @foreach ($show_new_pro as $index => $pro)
+                    <div class="sp col-lg-3 col-md-6 col-sm-6">
+                        <a href="{{ route('product_detail', ['id' => $pro->product_id]) }}" class="product-link">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{{ asset('uploads/' . $pro->images) }}">
+                                    <div class="product__label">
+                                        <span>Cupcake</span>
+                                    </div>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6>{{ $pro->name }}</h6>
+                                    <div class="product__item__price">{{ number_format($pro->price) }} vnđ</div>
+                                    <div class="cart_add">
+                                        <a style="cursor: pointer" class="add-to-cart"
+                                            data-product-id="{{ $pro->product_id }}">Add to cart</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="product__item__text">
-                                <h6><a href="#">{{ $show_pro->name }}</a></h6>
-                                <div class="product__item__price">{{ number_format($show_pro->price) }} vnđ</div>
-                                <div class="cart_add">
-                                    <a href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
-                @endforeach
+                    @endforeach
             </div>
         </div>
     </section>
@@ -372,4 +348,12 @@
         </div>
     </div>
     <!-- Map End -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

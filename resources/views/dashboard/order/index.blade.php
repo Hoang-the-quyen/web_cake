@@ -50,7 +50,7 @@
                                                             {{ $show->order_id }}
                                                         </td>
                                                         <td>
-                                                            {{ number_format($totalAmount) }} vnđ
+                                                            {{ number_format($show->total)   }} vnđ
                                                         </td>
                                                         <td>
                                                             {{ $show->date }}
@@ -66,7 +66,7 @@
                                                         </td>
                                                         <td width="24%">
                                                             <a class="btn btn-success" href="{{route('order-detail',['id' => $show->order_id])}}">Chi tiết đơn hàng</a>
-                                                            <a class="btn btn-danger" href="">Hủy đơn</a>
+                                                            <a class="btn btn-danger" href="{{route('delete-order',['id' => $show->order_id])}}">Hủy đơn</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

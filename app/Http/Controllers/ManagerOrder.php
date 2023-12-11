@@ -36,5 +36,19 @@ class ManagerOrder extends Controller
         // Truyền thông tin đơn hàng và sản phẩm vào view
         return view('dashboard.order.order_detail', compact('order', 'products'));
     }
+
+    public function destroy($id){
+        try {
+            $order = DB::table('orders')->findOrFail($id);
+
+            $order->delete();
+
+            // Chuyển hướng về trang danh sách sản phẩm hoặc trang khác tùy ý
+            return redirect()->route('home-manager-order')->with('success', 'hủy đơn hàng thành công');
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu có
+            return redirect()->route('home-manager-order')->with('error', 'Đã xảy ra lỗi khi xóa khi hủy đơn hàng.');
+        }
+    }
     
 }

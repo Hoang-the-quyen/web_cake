@@ -64,6 +64,7 @@
                             <h4>{{ $show->name }}</h4>
                             <h5>{{ number_format($show->price) }} vnđ</h5>
                             <p>{{ $show->des }}</p>
+                            <p>{{$show->size}}</p>
                             <ul>
                                 <li>SKU: <span>{{ $show->product_id }}</span></li>
                                 <li>

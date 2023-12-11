@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 use DB;
 
 class Paratials extends Controller
@@ -23,14 +24,16 @@ class Paratials extends Controller
 
     public function show_new_pro()
     {
+        $cate = Category::orderBy('category_id', 'desc')->get();
         $show_new_pro = Product::orderBy('product_id', 'desc')->paginate(8);
-        return view('pages.paratials.home_pages', ['show_new_pro' => $show_new_pro]);
+        return view('pages.paratials.home_pages', ['show_new_pro' => $show_new_pro],['cate'=> $cate]);
     }
 
     public function shop()
     {
         $cate = DB::table('categories')->get();
         $shop = Product::orderBy('product_id', 'desc')->paginate(40);
+        // $shop = Product::orderBy('product_id', 'desc')->get();
         return view("pages.product.product", ['shop' => $shop], ['cate' => $cate]);
     }
 
@@ -43,19 +46,6 @@ class Paratials extends Controller
         return view('pages.product.product_detail')->with('product', $product)->with('cate', $cate)->with('sup', $sup);
 
     }
-
-    // public function search_order(Request $request)
-    // {
-    //     $keyword = $request->timkiem;
-    //     $search_orders = DB::table('orders')
-    //         ->join('purchases', 'orders.order_id', '=', 'purchases.order_id')
-    //         ->join('products','products.product_id','=','purchases.product_id')
-    //         ->where('orders.order_id', 'like', '%' . $keyword . '%')
-    //         ->select('orders.*', 'purchases.*') // Select columns you need from both tables
-    //         ->get();
-
-    //     return view('pages.cart.show_order_history')->with('search_orders', $search_orders);
-    // }
 
 
     public function search_order(Request $request)

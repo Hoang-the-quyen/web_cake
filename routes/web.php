@@ -62,6 +62,7 @@ Route::prefix('dashboards')->group(function () {
 
         Route::get('home-manager-order',[ManagerOrder::class,'index'])->name('home-manager-order');
 
+        Route::get('delete-order/{id}',[ManagerOrder::class,'destroy'])->name('delete-order');
         
     });
 
